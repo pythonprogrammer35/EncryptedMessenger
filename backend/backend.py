@@ -8,6 +8,8 @@ import random
 
 app = FastAPI()
 
+class MessageRequest(BaseModel):
+    message: str
 
 app.add_middleware(CORSMiddleware, 
                    allow_origins=["*"],
@@ -20,3 +22,8 @@ app.add_middleware(CORSMiddleware,
 def test_connection(input):
     print(f"connection found {input}")
     return "Message Recieved"
+
+@app.post("/sendmessage")
+def send_message(message: MessageRequest):
+    print(message.message)
+    return "message got"
